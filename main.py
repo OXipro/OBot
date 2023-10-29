@@ -8,8 +8,16 @@ from datetime import datetime
 import argparse
 parser = argparse.ArgumentParser(description="OBot discord bot")
 parser.add_argument('--token', help='Token Discord')
+parser.add_argument('--client_id', help="Client ID for invitation links if not set the invite command will be disabled")
 args = parser.parse_args()
 token = args.token
+client_id = args.client_id
+
+if client_id == None or client_id == "null":
+    print("No Client ID specified the invite command will be disabled")
+else:
+    print("Client ID was set to " + client_id)
+
 if args.token == "":
     print("No token Specified Syntaxe : python Obot.py --token <your token>")
     exit(52)
@@ -83,6 +91,16 @@ async def pause(ctx):
     if not client.is_paused():
         client.pause()
 
+
+@bot.command()
+async def invite(ctx):
+    print("invite on server requested")
+    if client_id == None or client_id == "null":
+        print("No Client ID not specified invite is Disabled")
+        await ctx.send("Je ne peux pas vous donner d'invitation car la Valeur de Client ID au démarage na pas été spécifié")
+    else:
+        await ctx.send("Voici le lien d'invitation de OBot : \n " + discord.utils.oauth_url(client_id, permissions=discord.Permissions(administrator=True)) + "\n a bientot sur votre serveur :/")
+        print("invite on server send")
 
 @bot.command()
 async def leave(ctx):

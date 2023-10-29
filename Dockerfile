@@ -17,7 +17,8 @@ RUN apt install -y ffmpeg
 
 # Définissez l'argument pour le token (le token par défaut est 'default_token')
 ARG TOKEN=default_token
+ARG CLIENT_ID=null
 
 # Exécutez votre programme Python avec le token en tant qu'argument
 # CMD ["python", "/app/main.py", "--token", "$TOKEN"]
-CMD python /app/main.py --token ${TOKEN}
+CMD python /app/main.py --token ${TOKEN} --client_id ${CLIENT_ID}
